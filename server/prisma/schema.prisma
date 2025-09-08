@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  passwordHash String   @map("password_hash")
+  name         String?
+  role         Role     @default(USER)
+  entries      Entry[]  @relation("userEntries")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+  deletedAt    DateTime? @map("deleted_at")
+}
+
+model Entry {
+  id          Int       @id @default(autoincrement())
+  title       String
+  type        EntryType
+  director    String?
+  budget      String?
+  location    String?
+  duration    String?
+  yearTime    String?   @map("year_time")
+  description String?
+  posterUrl   String?   @map("poster_url")
+  thumbUrl    String?   @map("poster_thumb_url")
+  createdById Int       @map("created_by")
+  createdBy   User      @relation(fields: [createdById], references: [id], name: "userEntries")
+  status      EntryStatus @default(PENDING)
+  approved    Boolean   @default(false)
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  deletedAt   DateTime? @map("deleted_at")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum EntryType {
+  MOVIE
+  TV_SHOW
+}
+
+enum EntryStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
