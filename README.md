@@ -1,35 +1,41 @@
-# Favorite Movies & TV Shows — Backend
+# Favorite Movies & TV Shows App (Backend)
 
-> Production-ready backend for **Favorite Movies & TV Shows** — Node.js + Express API with MySQL (Prisma ORM), Dockerized for local development.
-
-## 🔎 Project summary
-This project implements a full-featured backend for managing users' favorite movies and TV shows with:
-- User authentication & authorization (JWT)
-- Admin approval workflow for new entries
-- CRUD for movies / TV shows with role-based restrictions
-- File uploads (posters) to S3-compatible storage (MinIO)
-- Advanced filtering, search, multi-column sorting, cursor pagination
-- Swagger API documentation (`/api-docs`)
-- Dockerized (backend, MySQL, MinIO) + Prisma migrations & seed script
+## 📌 Project Summary
+A production-ready backend to manage favorite Movies & TV Shows.  
+Includes:
+- JWT authentication (Admin & User roles)  
+- CRUD for movies/TV shows  
+- Admin approval workflow  
+- File uploads (S3/MinIO)  
+- Advanced search, filters, sorting, infinite scroll (via pagination)  
+- Swagger API docs  
 
 ---
 
-## 🧰 Technology stack
-- Node.js + Express
-- Prisma ORM (MySQL)
-- Docker, docker-compose
-- MinIO (S3-compatible) for uploads
-- Zod / Joi (request validation)
-- Swagger/OpenAPI for docs
-- Jest / Supertest for tests
+## ⚙️ Tech Stack
+- Node.js (Express)  
+- MySQL + Prisma ORM  
+- Docker & docker-compose  
+- Zod / Joi validation  
+- Jest + Supertest (backend tests)  
 
 ---
 
-## 🚀 Quick start (recommended: Docker)
-> Works on Windows / macOS / Linux with Docker Engine (Docker Desktop).
+## 🚀 Quick Start (Docker)
 
-1. Clone repo:
 ```bash
-git clone https://github.com/<your-username>/favorite-movies-app.git
+git clone https://github.com/ambesh1202/favorite-movies-app.git
 cd favorite-movies-app
 
+# Copy env file
+cp server/.env.example server/.env
+
+# Start services
+docker-compose up --build -d
+
+# First-time setup inside backend container
+docker-compose exec backend sh
+npm install
+npx prisma migrate deploy --schema=./prisma/schema.prisma
+node prisma/seed.js
+exit
