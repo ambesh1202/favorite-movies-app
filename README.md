@@ -39,3 +39,11 @@ npm install
 npx prisma migrate deploy --schema=./prisma/schema.prisma
 node prisma/seed.js
 exit
+## Live Demo
+- Frontend: https://favorite-movies-app.vercel.app
+- Backend API: https://favorite-movies-api.onrender.com
+- Swagger Docs: https://favorite-movies-api.onrender.com/api-docs
+
+### Demo Credentials
+- Admin: admin@example.com / Admin123
+- User: user@example.com / Password123
